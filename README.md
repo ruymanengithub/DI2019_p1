@@ -5,7 +5,7 @@ Capstone Project Plots\
 R. Azzollini
 
 
-Data Procedence:\
+Data Procedence:
 
 1) Share prices from yahoo finance (via pandas_datareader). The symbols have been obtained from datahub.\
 
