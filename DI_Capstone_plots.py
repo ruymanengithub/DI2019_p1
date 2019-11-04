@@ -59,7 +59,7 @@ def dofig_LinkSto(linkedin,stock,**kwargs):
     plt.show()
     
 
-def dofig_ListLink(listings,linkedin,**kwargs):
+def dofig_LinkList(linkedin,listings,**kwargs):
     """ """
     
     trange = kwargs['trange']
@@ -75,6 +75,7 @@ def dofig_ListLink(listings,linkedin,**kwargs):
     ax1.plot(x1,feat1,'k-')
     ax1.set_title('Employees @ LinkedIn')
     ax1.set_xlim(trange)
+    ax1.set_ylabel('N')
     #ax1.set_ylim([0.5,1.5])
     
     x2 = listings['date']
@@ -84,9 +85,10 @@ def dofig_ListLink(listings,linkedin,**kwargs):
     #feat2 /= np.median(feat2[np.where((x2>=trange[0]) & (x2<=trange[1]))])
     
     ax2 = fig.add_subplot(122)
-    ax2.set_title('Job Posts')
+    ax2.set_title('Job Posts per Month')
     ax2.plot(x2,feat2,'k-')
     ax2.set_xlim(trange)
+    ax2.set_ylabel('N')
     #ax2.set_ylim([0.5,1.5])
     
     #plt.gca().xaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(format_date))
@@ -117,3 +119,28 @@ class Plotter(object):
     
         dofig_LinkSto(linkedin,stock,**kwargs)
 
+
+    def launch_LinkList(self,company):
+        """ """
+        
+        linkedin = self.data[company]['linkedin']
+        listings = self.data[company]['listings']
+        
+        trange = [listings['date'].min(),listings['date'].max()]
+        
+        kwargs = dict(trange=trange,
+                  company=company)
+    
+        dofig_LinkList(linkedin,listings,**kwargs)
+
+
+def test():
+    """ """
+    from pdb import set_trace as stop
+    data = pickle.load(open('Capstone_parsed.pick','rb'))
+    
+    plotter = Plotter(data)
+    plotter.launch_LinkSto('google')
+
+if __name__ == '__main__':
+    test()
